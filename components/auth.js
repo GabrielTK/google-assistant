@@ -10,7 +10,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const OAuth2 = new (require('google-auth-library'))().OAuth2;
 
-function Auth(config, oAuthHandler) {
+function Auth(config) {
   if (config === undefined) config = {};
 
   // make sure we have a key file to read from
