@@ -10,7 +10,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const OAuth2 = new (require('google-auth-library'))().OAuth2;
 
-function Auth(config) {
+function Auth(config, oAuthHandler) {
   if (config === undefined) config = {};
 
   // make sure we have a key file to read from
@@ -45,6 +45,7 @@ function Auth(config) {
 
     // open the URL
     console.log('Opening OAuth URL. Return here with your code.');
+    if(config.noBrowser != true)
     opn(url).catch(() => {
       console.log('Failed to automatically open the URL. Copy/paste this in your browser:\n', url);
     });
@@ -52,7 +53,7 @@ function Auth(config) {
     // if tokenInput is configured
     // run the tokenInput function to accept the token code
     if (typeof config.tokenInput === 'function') {
-      config.tokenInput(processTokens);
+      config.tokenInput(url, processTokens);
       return;
     }
 
